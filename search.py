@@ -147,9 +147,35 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     return []
 
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
-    """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    """Search the node of least total cost first.
+    This is the same as BFS and DFS, except the fringe is ordered by the cumulative path cost."""
+    
+    fringe = util.PriorityQueue() #PriorityQueue is a FIFO data structure, which allows UCS to work since it will explore the nodes with the lowest cost first.
+    visited = set() #visited keeps track of the states that have been visited
+    
+    start_state = problem.getStartState() #grab the initial node, which is a tuple (x,y) of integers specifying Pacman's position.
+    best_cost = {start_state: 0}
+    fringe.push((start_state, []), 0) # With PriorityQueue, we expect two arguments: the tuple of the state and the path, and the priority (cost) of the state.
+    
+    while not fringe.isEmpty():
+        state, path = fringe.pop() #pop only returns two values, the cost has to be retrieved from the best_cost dictionary.
+        cost_so_far = best_cost[state]
+        
+        if state in visited and cost_so_far > best_cost[state]: #if the state is visited AND the cost to reach it is greater than the best cost to reach it, we skip it.
+            continue
+        
+        visited.add(state)
+        
+        if problem.isGoalState(state):
+            return path
+        
+        for successor, action, cost in problem.getSuccessors(state):
+            new_cost = cost_so_far + cost #update the cost to reach the successor.
+            if successor not in visited or new_cost < best_cost[successor]: #if the state is not visited or the cost to reach it is less than the best cost to reach it, we add it to the fringe.
+                fringe.push((successor, path + [action]), new_cost)
+                best_cost[successor] = new_cost #update the best cost to reach the successor.
+    
+    return []
 
 def nullHeuristic(state, problem=None) -> float:
     """
