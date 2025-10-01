@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Pacman DFS (tinyMaze)",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/pacman.py",
+        "python": "/opt/homebrew/Caskroom/miniforge/base/bin/python3",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "args": [
+          "-l", "tinyMaze",
+          "-p", "SearchAgent",
+          "-a", "fn=depthFirstSearch"
+        ]
+      },
+      {
+        "name": "Pacman DFS (bigMaze)",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/pacman.py",
+        "python": "/opt/homebrew/Caskroom/miniforge/base/bin/python3",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "args": [
+          "-l", "bigMaze",
+          "-z", "0.5",
+          "-p", "SearchAgent",
+          "-a", "fn=depthFirstSearch"
+        ]
+      }
+    ]
+  }
