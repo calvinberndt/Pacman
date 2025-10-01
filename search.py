@@ -118,32 +118,31 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
-    """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+    """Search the shallowest nodes in the search tree first.
+    This is essentially the same as DFS, but with a dequeue instead of a pop."""
+    
+    
+    
     fringe = util.Queue() #Queue is a FIFO data structure, which allows BFS to work since it will explore the shallowest nodes first.
     visited = set() #visited keeps track of the states that have been visited
     
     start_state = problem.getStartState() #grab the initial node, which is a tuple (x,y) of integers specifying Pacman's position.
     fringe.push((start_state, [])) #push the initial node and the empty path to the fringe. 
 
-
     while not fringe.isEmpty():
-        state, path = fringe.pop() #pop the last node and the path to the goal from the fringe, in the first iteration it will be the initial node and the empty path.
+        state, path = fringe.pop()
         
-        #if the state has been visited, we already explored its successors and added them to the fringe, but it might have a lower cost path to the goal
-        if state in visited and problem.getCostOfActions(path) >= problem.getCostOfActions(visited[state]):
+        if state in visited:
             continue
+        
         visited.add(state)
-
-        if problem.isGoalState(state): #isGoalState checks if the state is the goal state. If our current state is the goal state, we return the path to the goal.
+        
+        if problem.isGoalState(state):
             return path
-
-        for successor, action, _ in problem.getSuccessors(state): #getSuccessors returns the successors of the current state.
-            # successor is a tuple (x,y) of integers specifying the successor's position.
-            # action is the action required to get to the successor. It is a Directions enum (North, South, East, West, Stop).
-            # _ is the cost of the action. Since we are using BFS, cost is not needed so it can be thrown away.
-            if successor not in visited: #if the successor has not been visited, we add it to the fringe.
-                fringe.push((successor, path + [action])) #pair the successor coordinates with the full action sequence that leads from the start to that successor
+        
+        for successor, action, _ in problem.getSuccessors(state):
+            if successor not in visited:
+                fringe.push((successor, path + [action]))
     
     return []
 
