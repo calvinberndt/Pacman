@@ -192,6 +192,8 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directi
         return g_cost + heuristic(state, problem) #return the cost to reach the state plus the heuristic value of the state.
 
     #The priority function is used to prioritize the nodes in the fringe by taking a function that returns the priority of the state.
+    #We are using PriorityQueueWithFunction because it allows us to pass a function as an argument to the PriorityQueue constructor.
+    #This in turn allows us to order the nodes in the fringe by their lowest cost.
     fringe = util.PriorityQueueWithFunction(priority) 
     visited = set() #visited keeps track of the states that have been visited
 
