@@ -191,17 +191,18 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directi
         state, _, g_cost = item #item is a tuple of the state, the path, and the cost to reach the state.
         return g_cost + heuristic(state, problem) #return the cost to reach the state plus the heuristic value of the state.
 
-    fringe = util.PriorityQueueWithFunction(priority) #PriorityQueueWithFunction is a FIFO data structure, which allows A* to work since it will explore the nodes with the lowest cost and heuristic first.
+    #The priority function is used to prioritize the nodes in the fringe by taking a function that returns the priority of the state.
+    fringe = util.PriorityQueueWithFunction(priority) 
     visited = set() #visited keeps track of the states that have been visited
 
     start_state = problem.getStartState()
     best_cost = {start_state: 0.0}
-    fringe.push((start_state, [], 0.0))
+    fringe.push((start_state, [], 0.0)) #pack everything into a single tuple, compared to my previous implementation, where i packed the state and the path into a tuple and the cost into a separate variable.
 
     while not fringe.isEmpty():
         state, path, g_cost = fringe.pop()
 
-        if state in visited and g_cost > best_cost.get(state, float('inf')):
+        if state in visited and g_cost > best_cost.get(state, float('inf')): #if best.cost(get(set)) doesn't exist we set it to infinite to prevent errors.
             continue
         visited.add(state)
 
