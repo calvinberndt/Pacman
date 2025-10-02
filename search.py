@@ -188,11 +188,11 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directi
     """Search the node that has the lowest combined cost (g) and heuristic (h) first."""
 
     def priority(item):
-        state, _, g_cost = item
-        return g_cost + heuristic(state, problem)
+        state, _, g_cost = item #item is a tuple of the state, the path, and the cost to reach the state.
+        return g_cost + heuristic(state, problem) #return the cost to reach the state plus the heuristic value of the state.
 
-    fringe = util.PriorityQueueWithFunction(priority) 
-    visited = set()
+    fringe = util.PriorityQueueWithFunction(priority) #PriorityQueueWithFunction is a FIFO data structure, which allows A* to work since it will explore the nodes with the lowest cost and heuristic first.
+    visited = set() #visited keeps track of the states that have been visited
 
     start_state = problem.getStartState()
     best_cost = {start_state: 0.0}
