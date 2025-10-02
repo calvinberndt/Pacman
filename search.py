@@ -158,8 +158,8 @@ def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     fringe.push((start_state, []), 0) # With PriorityQueue, we expect two arguments: the tuple of the state and the path, and the priority (cost) of the state.
     
     while not fringe.isEmpty():
-        state, path = fringe.pop() #pop only returns two values, the cost has to be retrieved from the best_cost dictionary.
-        cost_so_far = best_cost[state]
+        state, path = fringe.pop() #pop only returns one value, the state and the path, which is packed in a tuple. Unpack the tuple
+        cost_so_far = best_cost[state] #retrieve the cost to reach the state from the best_cost dictionary.
         
         if state in visited and cost_so_far > best_cost[state]: #if the state is visited AND the cost to reach it is greater than the best cost to reach it, we skip it.
             continue
