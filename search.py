@@ -187,7 +187,11 @@ def nullHeuristic(state, problem=None) -> float:
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directions]:
     """Search the node that has the lowest combined cost and heuristic first."""
     
-    fringe = util.PriorityQueueWithFunction(heuristic) #PriorityQueueWithFunction is a FIFO data structure, which allows A* to work since it will explore the nodes with the lowest cost and heuristic first.
+    #Generate a function so that it can be used as a priority function for the PriorityQueueWithFunction.
+    def priority_function(state, path, g_cost):
+        return heuristic(state, problem) + g_cost
+    
+    fringe = util.PriorityQueueWithFunction(priority_function) #PriorityQueueWithFunction is a FIFO data structure, which allows A* to work since it will explore the nodes with the lowest cost and heuristic first.
     visited = set() #visited keeps track of the states that have been visited
     
     start_state = problem.getStartState() #grab the initial node, which is a tuple (x,y) of integers specifying Pacman's position.
